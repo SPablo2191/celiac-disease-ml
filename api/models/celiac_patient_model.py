@@ -62,8 +62,9 @@ class CeliacPatient(BaseModel):
     marsh : Optional[str]
     # cd_type : Optional[str]
     # disease_diagnose : Optional[str]
+    
     def get_gender(self) -> GenderEnum:
-        return GenderEnum.MALE if self.gender == "Male" else GenderEnum.FEMALE
+        return GenderEnum.MALE if self.gender.strip().lower() == "male" else GenderEnum.FEMALE
     def get_diabetes(self) -> bool:
         return self.diabetes.lower() == 'yes'
     def get_diabetes_type(self) -> DiabetesTypeEnum:
