@@ -47,7 +47,7 @@ class CeliacDiseaseTypeEnum(int, Enum):
 
 class DiagnoseDescriptionEnum(str, Enum):
     CELIAC = "The patient could have celiac disease. Needs more evaluations."
-    NON_CELIAC = "The patient may not have celiac disease. Carry out more evaluations to detect the cause of your discomfort."
+    NON_CELIAC = "The patient may not have celiac disease. Carry out more evaluations to detect the cause of his/her discomfort."
 
 
 class ModelEnum(str, Enum):
