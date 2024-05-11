@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 from typing import Optional, Literal
 from enum import Enum
 
@@ -55,10 +55,11 @@ class ModelEnum(str, Enum):
 
 
 class CeliacPatient(BaseModel):
-    gender: Literal["male", "female"] = "male"
-    diabetes: Literal["yes", "no"] = "no"
-    diabetes_type: Literal["Type 1", "Type 2", "Unconfirmed"] = "Unconfirmed"
-    diarrhoea: Literal["inflammatory", "fatty", "watery"] = "fatty"
+    age : Optional[int] = Field(0,description="Age of the patient")
+    gender: Literal["male", "female"] = Field("male")
+    diabetes: Literal["yes", "no"] = Field("no",description="If the patient has or not diabetes")
+    diabetes_type: Literal["Type 1", "Type 2", "Unconfirmed"] = Field("Unconfirmed",description="Type of diabetes in case the patient has it. Otherwise, unconfirmed")
+    diarrhoea: Literal["inflammatory", "fatty", "watery"] = Field("fatty",description="type of deposition")
     marsh: Literal[
         "marsh type 0",
         "marsh type 3a",
@@ -66,7 +67,7 @@ class CeliacPatient(BaseModel):
         "marsh type 2",
         "none",
         "marsh type 3c",
-    ] = "none"
+    ] = Field("none",description="Level of damage in small intestine")
 
     def get_gender(self) -> GenderEnum:
         return (
@@ -119,7 +120,6 @@ class ModelResponse(BaseModel):
     ai_model: ModelEnum = ModelEnum.LOGISTIC_REGRESSION
     disease_diagnose: int
     diagnose_description: DiagnoseDescriptionEnum
-    accuracy: float
 
 
 class CeliacPatientEncoded(BaseModel):

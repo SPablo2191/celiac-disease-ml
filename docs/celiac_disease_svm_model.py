@@ -5,10 +5,11 @@ import warnings
 # Ignorar todos los warnings
 warnings.filterwarnings("ignore")
 
-data = pd.read_csv('docs\dataset_celiac.csv', delimiter=';', header=0)
+data = pd.read_csv("docs\dataset_celiac.csv", delimiter=";", header=0)
 
 
 from sklearn.preprocessing import LabelEncoder
+
 # encoding
 label_encoder = LabelEncoder()
 categorical_columns = data.columns
@@ -22,21 +23,25 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
-target = 'Disease_Diagnose'
+target = "Disease_Diagnose"
 X = data.drop(columns=[target])
 y = data[target]
-X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, random_state=42, shuffle=True)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, train_size=0.8, random_state=42, shuffle=True
+)
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
-svm_model = SVC(kernel='linear', C=1.0)
+svm_model = SVC(kernel="linear", C=1.0)
 svm_model.fit(X_train_scaled, y_train)
-sfs = SequentialFeatureSelector(estimator=svm_model,
-                                        k_features=5,
-                                        forward=True,
-                                        floating=False,
-                                        scoring='accuracy',
-                                        cv=5)
+sfs = SequentialFeatureSelector(
+    estimator=svm_model,
+    k_features=5,
+    forward=True,
+    floating=False,
+    scoring="accuracy",
+    cv=5,
+)
 
 
 X_train_selected = sfs.fit_transform(X_train_scaled, y_train)
@@ -44,7 +49,7 @@ X_train_selected = sfs.fit_transform(X_train_scaled, y_train)
 selected_features = list(X.columns[list(sfs.k_feature_idx_)])
 
 
-svm_model_selected = SVC(kernel='linear', C=1.0)
+svm_model_selected = SVC(kernel="linear", C=1.0)
 svm_model_selected.fit(X_train_selected, y_train)
 
 
@@ -58,7 +63,6 @@ conf_matrix_selected = confusion_matrix(y_test, y_pred_selected)
 classification_rep_selected = classification_report(y_test, y_pred_selected)
 
 
-
 print("Características seleccionadas:", selected_features)
 print("Accuracy del modelo SVM con características seleccionadas:", accuracy_selected)
 print("Matriz de Confusión con características seleccionadas:")
@@ -67,10 +71,12 @@ print("Reporte de Clasificación con características seleccionadas:")
 print(classification_rep_selected)
 
 
-
 example_index = X_test.index[0]
+print(example_index)
 example = X_test.loc[example_index].values.reshape(1, -1)
+print(example)
 example_scaled = scaler.transform(example)
+print(example_scaled)
 example_selected = sfs.transform(example_scaled)
 
 

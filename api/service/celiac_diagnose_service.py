@@ -23,6 +23,5 @@ class CeliacDiagnoseService:
         return ModelResponse(
             disease_diagnose=prediction[0],
             diagnose_description =  DiagnoseDescriptionEnum.CELIAC if prediction[0] == 0 else DiagnoseDescriptionEnum.NON_CELIAC,
-            ai_model= ModelEnum.LOGISTIC_REGRESSION,
-            accuracy= 0
+            ai_model= ModelEnum.LOGISTIC_REGRESSION
         )
