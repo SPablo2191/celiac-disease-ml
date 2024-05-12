@@ -27,6 +27,7 @@ class CeliacDiagnosisService:
             diabetes_type=patient_data.get_diabetes_type(),
             diarrhoea=patient_data.get_diarrhoea(),
         ).get_encoded_attributes_list()
+        print(patient_attribute_list)
         prediction = self.logistic_regression_model.predict([patient_attribute_list])
         return ModelResponse(
             disease_diagnose=prediction[0],

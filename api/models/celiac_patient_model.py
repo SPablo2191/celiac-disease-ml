@@ -1,4 +1,4 @@
-from pydantic import BaseModel,Field
+from pydantic import BaseModel, Field
 from typing import Optional, Literal
 from enum import Enum
 
@@ -55,11 +55,33 @@ class ModelEnum(str, Enum):
 
 
 class CeliacPatient(BaseModel):
-    age : Optional[int] = Field(0,description="Age of the patient")
-    gender: Literal["male", "female"] = Field("male")
-    diabetes: Literal["yes", "no"] = Field("no",description="If the patient has or not diabetes")
-    diabetes_type: Literal["Type 1", "Type 2", "Unconfirmed"] = Field("Unconfirmed",description="Type of diabetes in case the patient has it. Otherwise, unconfirmed")
-    diarrhoea: Literal["inflammatory", "fatty", "watery"] = Field("fatty",description="type of deposition")
+    age: Optional[int] = Field(0, description="Age of the patient")
+    gender: Literal["male", "female"] = Field(None, description="Gender of the patient")
+    diabetes: Literal["yes", "no"] = Field(
+        None, description="If the patient has or not diabetes"
+    )
+    diabetes_type: Literal["Type 1", "Type 2", "Unconfirmed"] = Field(
+        None,
+        description="Type of diabetes in case the patient has it. Otherwise, unconfirmed",
+    )
+    diarrhoea: Literal["inflammatory", "fatty", "watery"] = Field(
+        None, description="type of deposition"
+    )
+    abdominal: Literal["yes", "no"] = Field(
+        None, description="If the patient has or not abdominal pain"
+    )
+    short_stature: Literal["pss", "variant", "dss"] = Field(
+        None, description="If the patient has Psychosocial Short Stature (PSS)"
+    )
+    sticky_stool: Literal["yes", "no"] = Field(
+        None, description="If the patient has or not sticky stool"
+    )
+    weight_loss: Literal["yes", "no"] = Field(
+        None, description="If the patient has or not weight loss"
+    )
+    ig_a: Optional[float] = Field(None, description="IgA of the patient")
+    ig_g: Optional[float] = Field(None, description="IgG of the patient")
+    ig_m: Optional[float] = Field(None, description="IgM of the patient")
     marsh: Literal[
         "marsh type 0",
         "marsh type 3a",
@@ -67,7 +89,9 @@ class CeliacPatient(BaseModel):
         "marsh type 2",
         "none",
         "marsh type 3c",
-    ] = Field("none",description="Level of damage in small intestine")
+    ] = Field(None, description="Level of damage in small intestine")
+    cd_type: Literal["potential", "atypical", "latent", "silent", "typical", "none"] = Field(None, description="If the patient has an specific celiac disease type")
+
 
     def get_gender(self) -> GenderEnum:
         return (
